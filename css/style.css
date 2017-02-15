@@ -1,0 +1,16 @@
+.left-side {
+    background-color: #212428;
+    color: #949090;
+    float: left;
+    width: 30%;
+}
+
+.left-inside {
+    margin-left: 2%;
+}
+
+
+.right-side {
+    float: right;
+    width: 70%;
+}
