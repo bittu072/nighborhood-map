@@ -14,3 +14,16 @@
     float: right;
     width: 70%;
 }
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0px;
+    font-size: 25px;
+    border: none;
+    cursor: pointer;
+}
+
+.button-txt {
+    padding: 3px 10px;
+}
