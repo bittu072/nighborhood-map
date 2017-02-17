@@ -69,7 +69,13 @@ var ViewModel = function() {
     });
 
     this.currentPlace = ko.observable( this.placeList()[0] );
+    // this.incrementCounter = function() {
+    //     self.currentPlace().ClickCount(self.currentDog().ClickCount() +1);
+    // };
 
+    this.itemClicked = function(data) {
+            self.currentPlace(data);
+    }
 };
 
 ko.applyBindings(new ViewModel());
