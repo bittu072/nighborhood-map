@@ -3,28 +3,40 @@
   <head>
     <meta charset="utf-8">
     <title>Neighborhood Map</title>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body class="container">
-      <div class="left-side text-center">
-          Enter Location
+      <div class="left-side left-inside">
+          <br>
+          Search
           <div class="">
               <form id="form-container">
-                  <label for="city">City </label>
-                  <input id="pac-input" type="text" placeholder="Search Box">
-                  <button id="submit-btn" class="dropbtn button-txt">Submit</button>
+                  <input type="text" id="city" placeholder="Enter city">
+                  <button type="submit" id="submit-btn" class="dropbtn button-txt">Submit</button>
               </form>
-
-              <br><br><br>
+              <br>
           </div>
-      </div>
-      <div class="right-side">
-          <div id="map"></div>
+          <div>
+              <ul data-bind="foreach: placeList">
+                      <h4><li data-bind="text: name, click: $parent.itemClicked.bind()" > </li></h4>
+                      <br>
+              </ul>
+          </div>
+          <hr>
+          <div data-bind="with:currentPlace">
+              <h2 data-bind="text: name"></h2>
+           <div>
       </div>
 
-      <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk&libraries=places&callback=initAutocomplete" async defer></script> -->
-      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+      <div data-bind="with:currentPlace" class="right-side">
+          <!-- <div id="mapplace" class='right-inside'>
+              <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&q=Long+Beach" allowfullscreen></iframe> -->
+              <h2 data-bind="text: name"></h2>
+        </div>
+      </div>
+      <script src="js/libs/jquery.min.js"></script>
+      <script src="js/libs/knockout-3.2.0.js"></script>
       <script src="js/script.js"></script>
   </body>
 </html>

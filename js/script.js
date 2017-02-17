@@ -1,66 +1,75 @@
-function initAutocomplete() {
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: -33.8688, lng: 151.2195},
-    zoom: 13,
-    mapTypeId: 'roadmap'
-  });
+// function loadData() {
+//     var $mapplaceElem = $('#mapplace');
+//     var cityStr = $('#city').val();
+//     var mapviewUrl = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&q=' + cityStr;
+//     var tagmap = '<iframe width="600" height="450" frameborder="0" style="border:0" src="' +mapviewUrl + '" allowfullscreen></iframe>';
+//     // alert(tagmap);
+//     // $("#mapplace").append(tagmap);
+//     // $("#mapplace").replaceWith(tagmap);
+//     // $( "p" ).append( "<p>Test</p>" );
+// };
+//
+// $("#submit-btn").click(loadData())
+// $('#form-container').click(loadData);
 
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener('bounds_changed', function() {
-    searchBox.setBounds(map.getBounds());
-  });
-
-  var markers = [];
-  // Listen for the event fired when the user selects a prediction and retrieve
-  // more details for that place.
-  searchBox.addListener('places_changed', function() {
-    var places = searchBox.getPlaces();
-
-    if (places.length == 0) {
-      return;
-    }
-
-    // Clear out the old markers.
-    markers.forEach(function(marker) {
-      marker.setMap(null);
-    });
-    markers = [];
-
-    // For each place, get the icon, name and location.
-    var bounds = new google.maps.LatLngBounds();
-    places.forEach(function(place) {
-      if (!place.geometry) {
-        console.log("Returned place contains no geometry");
-        return;
-      }
-      var icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-
-      // Create a marker for each place.
-      markers.push(new google.maps.Marker({
-        map: map,
-        icon: icon,
-        title: place.name,
-        position: place.geometry.location
-      }));
-
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
-  });
+var place = function(data) {
+    this.name = ko.observable(data.name);
+    this.address = ko.observable(data.address);
+    this.link = ko.observable(data.link);
 }
+
+// model/datas for the places on map
+var places = [
+        {
+            name: 'Glacier Point',
+            address: 'Glacier Point Rd, Yosemite Valley, CA 95389',
+            link: 'http://travel.usnews.com/Yosemite_CA/Things_To_Do/Glacier_Point_Trail_Hike_59152/'
+        },
+        {
+            name: 'Half Dome',
+            address: 'Yosemite Valley, CA 95389',
+            link: 'http://travel.usnews.com/Yosemite_CA/Things_To_Do/Top_of_Half_Dome_Hike_54302/'
+        },
+        {
+            name: 'Tuolumne Meadows',
+            address: 'Tioga Rd, Yosemite Valley, CA 95389',
+            link: 'http://travel.usnews.com/Yosemite_CA/Things_To_Do/Tuolumne_Meadows_26248/'
+        },
+        {
+            name: 'Mist Trail and Vernal Fall',
+            address: 'Mist Trail, California 95389',
+            link: 'http://travel.usnews.com/Yosemite_CA/Things_To_Do/Mist_Trail_and_Vernal_Falls_59154/'
+        },
+        {
+            name: 'Ansel Adams Gallery',
+            address: '9031 Village Dr, YOSEMITE NATIONAL PARK, CA 95389',
+            link: 'http://travel.usnews.com/Yosemite_CA/Things_To_Do/Ansel_Adams_Gallery_61126/'
+        },
+        {
+            name: 'Horsetail Fall',
+            address: 'Horsetail Fall, Yosemite National Park, California, USA',
+            link: 'https://en.wikipedia.org/wiki/Horsetail_Fall_(Yosemite)'
+        },
+        {
+            name: 'Tenaya Lake',
+            address: 'Yosemite National Park, Tioga Rd, California 95389',
+            link: 'https://www.nps.gov/yose/planyourvisit/lakes.htm'
+        }
+]
+
+
+var ViewModel = function() {
+    var self = this;
+
+    this.placeList = ko.observableArray([]);
+
+    places.forEach(function(placeItem){
+        self.placeList.push(new place(placeItem));
+    });
+
+    this.currentPlace = ko.observable( this.placeList()[0] );
+
+};
+
+ko.applyBindings(new ViewModel());

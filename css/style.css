@@ -1,17 +1,32 @@
+ul {
+   list-style: none;
+   margin-left: 4%;
+   padding: 0;
+}
+
+.container {
+    margin: 0% 2%;
+}
+
 .left-side {
     background-color: #212428;
     color: #949090;
     float: left;
-    width: 30%;
+    width: 31%;
 }
 
 .left-inside {
-    margin-left: 2%;
+    padding: 0% 2%;
 }
 
 .right-side {
+    margin-left: 1%;
     float: right;
-    width: 70%;
+    width: 67%;
+}
+
+.right-inside {
+    padding-left: 2%;
 }
 
 .dropbtn {
@@ -78,3 +93,4 @@ html, body {
      #target {
        width: 345px;
      }
+ }
