@@ -1,18 +1,3 @@
-// function loadData() {
-//     var $mapplaceElem = $('#mapplace');
-//     var cityStr = $('#city').val();
-//     var mapviewUrl = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&q=' + cityStr;
-//     var tagmap = '<iframe width="600" height="450" frameborder="0" style="border:0" src="' +mapviewUrl + '" allowfullscreen></iframe>';
-//     // alert(tagmap);
-//     // $("#mapplace").append(tagmap);
-//     // $("#mapplace").replaceWith(tagmap);
-//     // $( "p" ).append( "<p>Test</p>" );
-// };
-//
-// $("#submit-btn").click(loadData())
-// $('#form-container').click(loadData);
-
-
 var place = function(data) {
     this.name = ko.observable(data.name);
     this.address = ko.observable(data.address);
