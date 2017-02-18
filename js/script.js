@@ -149,6 +149,7 @@ function initMap() {
         function addMarker(latty, longy) {
           var marker = new google.maps.Marker({
             position: {lat: latty, lng: longy},
+            animation: google.maps.Animation.DROP,
             map: map,
             title: 'Yosmite'
           });
@@ -160,6 +161,15 @@ function initMap() {
             var placee = places[i];
             addMarker(placee.lat, placee.long);
         }
+        google.maps.event.addListener(addMarker, 'click', toggleBounce());
+}
+
+function toggleBounce() {
+  if (addMarker.getAnimation() !== null) {
+    addMarker.setAnimation(null);
+  } else {
+    addMarker.setAnimation(google.maps.Animation.BOUNCE);
+  }
 }
 
 
@@ -179,6 +189,9 @@ var ViewModel = function() {
 
     this.itemClicked = function(data) {
             self.currentPlace(data);
+            // alert(self.currentPlace().name());
+            // animateMarker(self.currentPlace().lat, self.currentPlace().long);
+            toggleBounce();
     }
 };
 
