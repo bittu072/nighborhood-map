@@ -26,17 +26,18 @@
           <hr>
           <div data-bind="with:currentPlace">
               <h2 data-bind="text: name"></h2>
-           <div>
+          </div>
       </div>
 
-      <div data-bind="with:currentPlace" class="right-side">
-          <!-- <div id="mapplace" class='right-inside'>
-              <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&q=Long+Beach" allowfullscreen></iframe> -->
-              <h2 data-bind="text: name"></h2>
+      <div class="right-side" id="map">
+          
         </div>
       </div>
       <script src="js/libs/jquery.min.js"></script>
       <script src="js/libs/knockout-3.2.0.js"></script>
-      <script src="js/script.js"></script>
+      <script type="text/javascript" src="js/script.js"></script>
+      <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&callback=initMap">
+    </script>
   </body>
 </html>
