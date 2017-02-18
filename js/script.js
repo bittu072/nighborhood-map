@@ -144,15 +144,16 @@ function initMap() {
             }
         ],
         });
+        var marker;
 
         // function to add marker
         function addMarker(latty, longy) {
-          var marker = new google.maps.Marker({
-            position: {lat: latty, lng: longy},
-            animation: google.maps.Animation.DROP,
-            map: map,
-            title: 'Yosmite'
-          });
+            marker = new google.maps.Marker({
+                position: {lat: latty, lng: longy},
+                animation: google.maps.Animation.DROP,
+                map: map,
+                title: 'Yosmite'
+            });
         }
 
         // looping through all my data to get lat and long of those
@@ -161,14 +162,14 @@ function initMap() {
             var placee = places[i];
             addMarker(placee.lat, placee.long);
         }
-        google.maps.event.addListener(addMarker, 'click', toggleBounce());
+        google.maps.event.addListener(marker, 'click', toggleBounce());
 }
 
 function toggleBounce() {
-  if (addMarker.getAnimation() !== null) {
-    addMarker.setAnimation(null);
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
   } else {
-    addMarker.setAnimation(google.maps.Animation.BOUNCE);
+    marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 }
 
