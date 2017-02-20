@@ -152,7 +152,6 @@ function initMap() {
                 position: {lat: latty, lng: longy},
                 animation: google.maps.Animation.DROP,
                 map: map,
-                title: 'Yosmite'
             });
         }
 
@@ -166,10 +165,11 @@ function initMap() {
 }
 
 function toggleBounce() {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
+  if (this.getAnimation() != null) {
+    this.setAnimation(null);
+  }
+  else {
+    this.setAnimation(google.maps.Animation.BOUNCE);
   }
 }
 
