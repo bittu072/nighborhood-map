@@ -161,15 +161,24 @@ function initMap() {
             var placee = places[i];
             addMarker(placee.lat, placee.long);
         }
-        google.maps.event.addListener(marker, 'click', toggleBounce());
+        var infowindow = new google.maps.InfoWindow({
+            content: "abcd"
+        });
+
+        google.maps.event.addListener(marker, 'click', (function () {
+            toggleBounce(marker);
+        }));
 }
 
-function toggleBounce() {
-  if (this.getAnimation() != null) {
-    this.setAnimation(null);
-  }
-  else {
-    this.setAnimation(google.maps.Animation.BOUNCE);
+function toggleBounce(marker) {
+  // Google map documentation shows to keep one "=" instead of two. Does not work with "=="
+  if (marker.setAnimation() != null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function() {
+      marker.setAnimation(null);
+    }, 600);
   }
 }
 
