@@ -59,120 +59,121 @@ var places = [
 
 var map;
 function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 11,
-          center: new google.maps.LatLng(37.865101, -119.538329),
-        //   this style is to change look/colors of map
-          styles: [
+    var $greeting = $('#greeting');
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: new google.maps.LatLng(37.865101, -119.538329),
+    //   this style is to change look/colors of map
+        styles: [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
             {
-              featureType: 'administrative.locality',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+                featureType: 'administrative.locality',
+                elementType: 'labels.text.fill',
+                stylers: [{color: '#d59563'}]
             },
             {
-              featureType: 'poi',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+                featureType: 'poi',
+                elementType: 'labels.text.fill',
+                stylers: [{color: '#d59563'}]
             },
             {
-              featureType: 'poi.park',
-              elementType: 'geometry',
-              stylers: [{color: '#263c3f'}]
+                featureType: 'poi.park',
+                elementType: 'geometry',
+                stylers: [{color: '#263c3f'}]
             },
             {
-              featureType: 'poi.park',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#6b9a76'}]
+                featureType: 'poi.park',
+                elementType: 'labels.text.fill',
+                stylers: [{color: '#6b9a76'}]
             },
             {
-              featureType: 'road',
-              elementType: 'geometry',
-              stylers: [{color: '#38414e'}]
+                featureType: 'road',
+                elementType: 'geometry',
+                stylers: [{color: '#38414e'}]
             },
             {
-              featureType: 'road',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#212a37'}]
+                featureType: 'road',
+                elementType: 'geometry.stroke',
+                stylers: [{color: '#212a37'}]
             },
             {
-              featureType: 'road',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#9ca5b3'}]
+                featureType: 'road',
+                elementType: 'labels.text.fill',
+                stylers: [{color: '#9ca5b3'}]
             },
             {
-              featureType: 'road.highway',
-              elementType: 'geometry',
-              stylers: [{color: '#746855'}]
+                featureType: 'road.highway',
+                elementType: 'geometry',
+                stylers: [{color: '#746855'}]
             },
             {
-              featureType: 'road.highway',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#1f2835'}]
+                featureType: 'road.highway',
+                elementType: 'geometry.stroke',
+                stylers: [{color: '#1f2835'}]
             },
             {
-              featureType: 'road.highway',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#f3d19c'}]
+                featureType: 'road.highway',
+                elementType: 'labels.text.fill',
+                stylers: [{color: '#f3d19c'}]
             },
             {
-              featureType: 'transit',
-              elementType: 'geometry',
-              stylers: [{color: '#2f3948'}]
+                featureType: 'transit',
+                elementType: 'geometry',
+                stylers: [{color: '#2f3948'}]
             },
             {
-              featureType: 'transit.station',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+                featureType: 'transit.station',
+                elementType: 'labels.text.fill',
+                stylers: [{color: '#d59563'}]
             },
             {
-              featureType: 'water',
-              elementType: 'geometry',
-              stylers: [{color: '#17263c'}]
+                featureType: 'water',
+                elementType: 'geometry',
+                stylers: [{color: '#17263c'}]
             },
             {
-              featureType: 'water',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#515c6d'}]
+                featureType: 'water',
+                elementType: 'labels.text.fill',
+                stylers: [{color: '#515c6d'}]
             },
             {
-              featureType: 'water',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#17263c'}]
-            }
-        ],
+                featureType: 'water',
+                elementType: 'labels.text.stroke',
+                stylers: [{color: '#17263c'}]
+            }],
         });
 
-        var markys = ko.observableArray([]);
+    var markys = ko.observableArray([]);
+    var selectedPlace = ko.observable();
 
-        // function to add marker
-        function addMarker(latty, longy, i) {
-            markys()[i] = new google.maps.Marker({
-                position: {lat: latty, lng: longy},
-                animation: google.maps.Animation.DROP,
-                map: map,
-            });
-            // markys.push(marker);
-            google.maps.event.addListener(markys()[i], 'click', function() {
-                toggleBounce(markys()[i]);
-            });
-        }
+    // function to add marker
+    function addMarker(place, i) {
+        markys()[i] = new google.maps.Marker({
+            position: {lat: place.lat, lng: place.long},
+            animation: google.maps.Animation.DROP,
+            map: map,
+            name: place.name,
+        });
+        // markys.push(marker);
+        google.maps.event.addListener(markys()[i], 'click', function() {
+            toggleBounce(markys()[i]);
+            selectedPlace(markys()[i]);
+            // alert(selectedPlace().name);
+            $greeting.text('This place is "' + selectedPlace().name +'"');
+        });
+    }
 
-        // looping through all my data to get lat and long of those
-        var i = 0;
-        for (i; i < places.length; i++) {
-            var placee = places[i];
-            addMarker(placee.lat, placee.long, i);
-        }
-        // var infowindow = new google.maps.InfoWindow({
-        //     content: "abcd"
-        // });
-
-
-
-
+    // looping through all my data to get lat and long of those
+    var i = 0;
+    for (i; i < places.length; i++) {
+        var placee = places[i];
+        addMarker(placee, i);
+    }
+    // var infowindow = new google.maps.InfoWindow({
+    //     content: "abcd"
+    // });
 }
 
 function toggleBounce(marker) {
@@ -183,12 +184,14 @@ function toggleBounce(marker) {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
       marker.setAnimation(null);
-    }, 600);
+  }, 1400);
   }
 }
 
 
 var ViewModel = function() {
+    var placeStr = $('#place').val();
+    // var $greeting = $('#greeting');
     var self = this;
 
     this.placeList = ko.observableArray([]);
@@ -204,10 +207,8 @@ var ViewModel = function() {
 
     this.itemClicked = function(data) {
             self.currentPlace(data);
-            // alert(self.currentPlace().name());
-            // animateMarker(self.currentPlace().lat, self.currentPlace().long);
-            // toggleBounce();
     }
+
 };
 
 ko.applyBindings(new ViewModel());
