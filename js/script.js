@@ -144,30 +144,35 @@ function initMap() {
             }
         ],
         });
-        var marker;
+
+        var markys = ko.observableArray([]);
 
         // function to add marker
-        function addMarker(latty, longy) {
-            marker = new google.maps.Marker({
+        function addMarker(latty, longy, i) {
+            markys()[i] = new google.maps.Marker({
                 position: {lat: latty, lng: longy},
                 animation: google.maps.Animation.DROP,
                 map: map,
             });
+            // markys.push(marker);
+            google.maps.event.addListener(markys()[i], 'click', function() {
+                toggleBounce(markys()[i]);
+            });
         }
 
         // looping through all my data to get lat and long of those
-        var i = 1;
+        var i = 0;
         for (i; i < places.length; i++) {
             var placee = places[i];
-            addMarker(placee.lat, placee.long);
+            addMarker(placee.lat, placee.long, i);
         }
-        var infowindow = new google.maps.InfoWindow({
-            content: "abcd"
-        });
+        // var infowindow = new google.maps.InfoWindow({
+        //     content: "abcd"
+        // });
 
-        google.maps.event.addListener(marker, 'click', (function () {
-            toggleBounce(marker);
-        }));
+
+
+
 }
 
 function toggleBounce(marker) {
@@ -201,7 +206,7 @@ var ViewModel = function() {
             self.currentPlace(data);
             // alert(self.currentPlace().name());
             // animateMarker(self.currentPlace().lat, self.currentPlace().long);
-            toggleBounce();
+            // toggleBounce();
     }
 };
 
