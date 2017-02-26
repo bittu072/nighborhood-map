@@ -147,6 +147,10 @@ function initMap() {
 
     var markys = ko.observableArray([]);
     var selectedPlace = ko.observable();
+    var c = ko.observable();
+    c("abcd");
+
+
 
     // function to add marker
     function addMarker(place, i) {
@@ -155,14 +159,22 @@ function initMap() {
             animation: google.maps.Animation.DROP,
             map: map,
             name: place.name,
+            link: place.link,
         });
         // markys.push(marker);
         google.maps.event.addListener(markys()[i], 'click', function() {
             toggleBounce(markys()[i]);
             selectedPlace(markys()[i]);
+            c(selectedPlace().link);
+
             // alert(selectedPlace().name);
-            $greeting.text('This place is "' + selectedPlace().name +'"');
+            $greeting.text(selectedPlace().name);
+            infowindow.open(map, markys()[i]);
         });
+
+        var infowindow = new google.maps.InfoWindow({
+              content: markys()[i].name
+            });
     }
 
     // looping through all my data to get lat and long of those
