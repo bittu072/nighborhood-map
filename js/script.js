@@ -57,136 +57,8 @@ var places = [
         }
 ]
 
-var map;
-function initMap() {
-    var $greeting = $('#greeting');
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 11,
-        center: new google.maps.LatLng(37.865101, -119.538329),
-    //   this style is to change look/colors of map
-        styles: [
-            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-            {
-                featureType: 'administrative.locality',
-                elementType: 'labels.text.fill',
-                stylers: [{color: '#d59563'}]
-            },
-            {
-                featureType: 'poi',
-                elementType: 'labels.text.fill',
-                stylers: [{color: '#d59563'}]
-            },
-            {
-                featureType: 'poi.park',
-                elementType: 'geometry',
-                stylers: [{color: '#263c3f'}]
-            },
-            {
-                featureType: 'poi.park',
-                elementType: 'labels.text.fill',
-                stylers: [{color: '#6b9a76'}]
-            },
-            {
-                featureType: 'road',
-                elementType: 'geometry',
-                stylers: [{color: '#38414e'}]
-            },
-            {
-                featureType: 'road',
-                elementType: 'geometry.stroke',
-                stylers: [{color: '#212a37'}]
-            },
-            {
-                featureType: 'road',
-                elementType: 'labels.text.fill',
-                stylers: [{color: '#9ca5b3'}]
-            },
-            {
-                featureType: 'road.highway',
-                elementType: 'geometry',
-                stylers: [{color: '#746855'}]
-            },
-            {
-                featureType: 'road.highway',
-                elementType: 'geometry.stroke',
-                stylers: [{color: '#1f2835'}]
-            },
-            {
-                featureType: 'road.highway',
-                elementType: 'labels.text.fill',
-                stylers: [{color: '#f3d19c'}]
-            },
-            {
-                featureType: 'transit',
-                elementType: 'geometry',
-                stylers: [{color: '#2f3948'}]
-            },
-            {
-                featureType: 'transit.station',
-                elementType: 'labels.text.fill',
-                stylers: [{color: '#d59563'}]
-            },
-            {
-                featureType: 'water',
-                elementType: 'geometry',
-                stylers: [{color: '#17263c'}]
-            },
-            {
-                featureType: 'water',
-                elementType: 'labels.text.fill',
-                stylers: [{color: '#515c6d'}]
-            },
-            {
-                featureType: 'water',
-                elementType: 'labels.text.stroke',
-                stylers: [{color: '#17263c'}]
-            }],
-        });
-
-    var markys = ko.observableArray([]);
-    var selectedPlace = ko.observable();
-    var c = ko.observable();
-    c("abcd");
-
-
-
-    // function to add marker
-    function addMarker(place, i) {
-        markys()[i] = new google.maps.Marker({
-            position: {lat: place.lat, lng: place.long},
-            animation: google.maps.Animation.DROP,
-            map: map,
-            name: place.name,
-            link: place.link,
-        });
-        // markys.push(marker);
-        google.maps.event.addListener(markys()[i], 'click', function() {
-            toggleBounce(markys()[i]);
-            selectedPlace(markys()[i]);
-            c(selectedPlace().link);
-
-            // alert(selectedPlace().name);
-            $greeting.text(selectedPlace().name);
-            infowindow.open(map, markys()[i]);
-        });
-
-        var infowindow = new google.maps.InfoWindow({
-              content: markys()[i].name
-            });
-    }
-
-    // looping through all my data to get lat and long of those
-    var i = 0;
-    for (i; i < places.length; i++) {
-        var placee = places[i];
-        addMarker(placee, i);
-    }
-    // var infowindow = new google.maps.InfoWindow({
-    //     content: "abcd"
-    // });
-}
+// var map;
+// function initMap() {
 
 function toggleBounce(marker) {
   // Google map documentation shows to keep one "=" instead of two. Does not work with "=="
@@ -201,26 +73,86 @@ function toggleBounce(marker) {
 }
 
 
-var ViewModel = function() {
+function ViewModel() {
     var placeStr = $('#place').val();
     // var $greeting = $('#greeting');
     var self = this;
-
     this.placeList = ko.observableArray([]);
-
-    places.forEach(function(placeItem){
-        self.placeList.push(new place(placeItem));
-    });
-
     this.currentPlace = ko.observable( this.placeList()[0] );
-    // this.incrementCounter = function() {
-    //     self.currentPlace().ClickCount(self.currentDog().ClickCount() +1);
-    // };
 
-    this.itemClicked = function(data) {
-            self.currentPlace(data);
+    // places.forEach(function(placeItem){
+    //     self.placeList.push(new place(placeItem));
+    // });
+
+    var $greeting = $('#greeting');
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: new google.maps.LatLng(37.865101, -119.538329),
+    //   this style is to change look/colors of map
+        });
+
+    var markys = ko.observableArray([]);
+    var selectedPlace = ko.observable();
+    var c = ko.observable();
+
+    function listen(place_info) {
+        var infowindow = new google.maps.InfoWindow({
+              content: place_info.name +": " + place_info.link.name
+            });
+        google.maps.event.addListener(place_info, 'click', function() {
+            toggleBounce(place_info);
+            selectedPlace(place_info);
+            // self.currentPlace(markys()[i]);
+            // alert(selectedPlace().name);
+            $greeting.text(selectedPlace().name);
+            infowindow.open(map, selectedPlace());
+        });
     }
+
+
+
+    // function to add marker
+    function addMarker(place, i) {
+        markys()[i] = new google.maps.Marker({
+            position: {lat: place.lat, lng: place.long},
+            animation: google.maps.Animation.DROP,
+            map: map,
+            name: place.name,
+            link: place,
+        });
+        $("#list").append("<li id="+i+">"+markys()[i].name+"</li><br>");
+
+        // markys.push(marker);
+        // google.maps.event.addListener(markys()[i], 'click', function() {
+        //     toggleBounce(markys()[i]);
+        //     selectedPlace(markys()[i]);
+        //     self.currentPlace(markys()[i]);
+        //     // alert(selectedPlace().name);
+        //     $greeting.text(selectedPlace().name);
+        //     infowindow.open(map, markys()[i]);
+        // });
+
+
+        listen(markys()[i]);
+    }
+
+    // looping through all my data to get lat and long of those
+    var i = 0;
+    for (i; i < places.length; i++) {
+        var placee = places[i];
+        addMarker(placee, i);
+        // self.placeList.push(new place(placee));
+    }
+
+    // this.itemClicked = function(data) {
+    //         self.currentPlace(data);
+    //         alert(currentPlace().name);
+    //
+    // }
+    // var infowindow = new google.maps.InfoWindow({
+    //     content: "abcd"
+    // });
 
 };
 
-ko.applyBindings(new ViewModel());
+// ko.applyBindings(new ViewModel());

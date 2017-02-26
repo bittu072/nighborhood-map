@@ -19,9 +19,12 @@
               <br>
           </div>
           <div>
-              <ul data-bind="foreach: placeList">
+              <!-- <ul data-bind="foreach: placeList">
                       <h4><li data-bind="text: name, click: $parent.itemClicked.bind()" > </li></h4>
                       <br>
+              </ul> -->
+              <ul>
+                  <h3 id="list"></h3>
               </ul>
           </div>
           <hr>
@@ -39,7 +42,7 @@
       <script src="js/libs/knockout-3.2.0.js"></script>
       <script type="text/javascript" src="js/script.js?version=1.1"></script>
       <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&callback=ViewModel" >
     </script>
   </body>
 </html>
