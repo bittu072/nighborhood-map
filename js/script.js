@@ -122,16 +122,6 @@ function ViewModel() {
         });
         $("#list").append("<li id="+i+">"+markys()[i].name+"</li><br>");
 
-        // markys.push(marker);
-        // google.maps.event.addListener(markys()[i], 'click', function() {
-        //     toggleBounce(markys()[i]);
-        //     selectedPlace(markys()[i]);
-        //     self.currentPlace(markys()[i]);
-        //     // alert(selectedPlace().name);
-        //     $greeting.text(selectedPlace().name);
-        //     infowindow.open(map, markys()[i]);
-        // });
-
 
         listen(markys()[i]);
     }
