@@ -58,7 +58,6 @@ var places = [
 ]
 
 // var map;
-// function initMap() {
 
 function toggleBounce(marker) {
   // Google map documentation shows to keep one "=" instead of two. Does not work with "=="
@@ -95,21 +94,29 @@ function ViewModel() {
     var selectedPlace = ko.observable();
     var c = ko.observable();
 
+    // function to perform task when click on the marker or list name
     function listen(place_info) {
         var infowindow = new google.maps.InfoWindow({
-              content: place_info.name +": " + place_info.link.name
+              content: place_info.info.name
             });
         google.maps.event.addListener(place_info, 'click', function() {
             toggleBounce(place_info);
-            selectedPlace(place_info);
-            // self.currentPlace(markys()[i]);
-            // alert(selectedPlace().name);
-            $greeting.text(selectedPlace().name);
-            infowindow.open(map, selectedPlace());
+            $greeting.text(place_info.info.name);
+            infowindow.open(map, place_info);
+            setTimeout(function () { infowindow.close(); }, 5000);
+
         });
     }
 
-
+    function listeny(place_info) {
+        var infowindow = new google.maps.InfoWindow({
+              content: place_info.info.name
+            });
+            toggleBounce(place_info);
+            $greeting.text(place_info.info.name);
+            infowindow.open(map, place_info);
+            setTimeout(function () { infowindow.close(); }, 5000);
+    }
 
     // function to add marker
     function addMarker(place, i) {
@@ -117,10 +124,9 @@ function ViewModel() {
             position: {lat: place.lat, lng: place.long},
             animation: google.maps.Animation.DROP,
             map: map,
-            name: place.name,
-            link: place,
+            info: place,
         });
-        $("#list").append("<li id="+i+">"+markys()[i].name+"</li><br>");
+        $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
 
 
         listen(markys()[i]);
@@ -131,9 +137,12 @@ function ViewModel() {
     for (i; i < places.length; i++) {
         var placee = places[i];
         addMarker(placee, i);
-        // self.placeList.push(new place(placee));
     }
 
-};
+    $("li").click(function() {
+       var clickedItemID = event.target.id;
+       listeny(markys()[clickedItemID]);
+      //your snipped to affect page 2 goes here ....
+    });
 
-// ko.applyBindings(new ViewModel());
+};
