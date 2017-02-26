@@ -134,15 +134,6 @@ function ViewModel() {
         // self.placeList.push(new place(placee));
     }
 
-    // this.itemClicked = function(data) {
-    //         self.currentPlace(data);
-    //         alert(currentPlace().name);
-    //
-    // }
-    // var infowindow = new google.maps.InfoWindow({
-    //     content: "abcd"
-    // });
-
 };
 
 // ko.applyBindings(new ViewModel());
