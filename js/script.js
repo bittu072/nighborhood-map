@@ -154,18 +154,13 @@ function ViewModel() {
 
     i=0;
     for (i; i < markys().length; i++) {
-        // alert(placeList()[i].name);
         placeList.push(new placeMark(markys()[i], i));
-        // alert(markys()[i].info.name);
     }
 
     this.finalList = ko.computed( function() {
         var searchy = self.query().toLowerCase();
         placeList.removeAll();
         if (!searchy) {
-            // self.placeList().forEach(function(item){
-            //     // item.visible(true);
-            // });
             i=0;
             for (i; i < markys().length; i++) {
                 // placeList()[i].visible = false;
@@ -180,15 +175,8 @@ function ViewModel() {
                 var base_str = markys()[i].info.name;
 
                 if(base_str.toLowerCase().indexOf(searchy) >= 0){
-                    // alert(base_str);
-                    // placeList()[i].visible = true;
                     placeList.push(new placeMark(markys()[i], i));
                 }
-                else{
-                    // alert("not:::::::" + i);
-                    // placeList()[i].visible = false;
-                }
-
             }
             return placeList();
         }
@@ -201,16 +189,9 @@ function ViewModel() {
             // self.currentDog(data);
     }
 
-    // $("li").click(function() {
-    //     alert(event.target.id);
-    //    var clickedItemID = event.target.id;
-    //    listeny(markys()[clickedItemID]);
-    // });
-
-
 };
 
-function startApp() {
+function start() {
     // ViewModel.query.subscribe(ViewModel.search);
 	ko.applyBindings(new ViewModel());
 }

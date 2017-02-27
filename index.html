@@ -18,8 +18,6 @@
           Search
           <div class="">
               <form id="form-container">
-                  <!-- <input type="text" id="place" autocomplete="off"> -->
-                  <!-- <input id="place" data-bind="textInput: place, valueUpdate: 'afterkeydown'" /> -->
                   <input placeholder="Search…" id="place" type="search" data-bind="textInput: query, valueUpdate: 'keyup'" autocomplete="off">
               </form>
               <br>
@@ -29,14 +27,6 @@
                       <h4><li data-bind="attr: { id: idNum}, text: name, click: $parent.itemClicked.bind()" > </li></h4>
                       <br>
               </ul>
-              <!-- <ul id="pllist"> -->
-                  <!-- <h3 id="list"></h3> -->
-                  <!-- <h3 id="list"></h3> -->
-                  <!-- <h4 data-bind="text: title"></h4> -->
-              <!-- </ul> -->
-                <!-- <ul data-bind="foreach: placeList" >
-                    <li data-bind="text: name"> </li>
-                <ul> -->
           </div>
           <hr>
           <div>
@@ -50,7 +40,7 @@
       <script src="js/libs/knockout-3.2.0.js"></script>
       <script type="text/javascript" src="js/script.js?version=1.1"></script>
       <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&callback=startApp" >
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&callback=start" >
     </script>
   </body>
 </html>
