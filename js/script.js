@@ -84,6 +84,8 @@ function ViewModel() {
     // var place = ko.observable("");
     var self = this;
     placeList = ko.observableArray([]);
+    this.query = ko.observable("");
+    // query: ko.observable('');
     // this.currentPlace = ko.observable( this.placeList()[0] );
 
     var $greeting = $('#greeting');
@@ -144,7 +146,7 @@ function ViewModel() {
     }
 
     i = 0;
-    var query = ko.observable();
+
 
     // markys().forEach(function(marky) {
     //     placeList.push(new placeMark(marky));
@@ -157,76 +159,72 @@ function ViewModel() {
         // alert(markys()[i].info.name);
     }
 
+    this.finalList = ko.computed( function() {
+        var searchy = self.query().toLowerCase();
+        if (!searchy) {
+            // self.placeList().forEach(function(item){
+            //     // item.visible(true);
+            // });
+            i=0;
+            for (i; i < markys().length; i++) {
+                placeList()[i].visible = true;
+                // alert(placeList()[i].name);
+            }
+            return placeList();
+        } else {
+            // return ko.utils.arrayFilter(placeList(), function() {
+                // alert(item.name);
+                // var base_str = item.name.toLowerCase();
+                // var output = (base_str.search(searchy) >= 0);
+                // item.visible(output);
+                // return output;
+                // i=0;
+                // for (i; i < placeList().length; i++) {
+                //     // placeList()[i].visible = true;
+                //     var base_str = placeList()[i].name.toString();
+                //     // alert("abc:::::: " +placeList()[i].idNum);
+                //     // alert(base_str);
+                //     // if(base_str.toLowerCase().indexOf(searchy) >= 0) {
+                //     //
+                //     //     placeList()[i].visible = true;
+                //     // }
+                //     // else {
+                //     //     placeList()[i].visible = false;
+                //     // }
+                //     var result = (base_str.search(searchy) >= 0);
+                //     // alert(result);
+				//     // placeList()[i].visible = result;
+				//     // return result;
+                //
+                // }
+            // });
+            // return placeList();
+            // return ko.utils.arrayFilter(placeList(), function(locationItem) {
+			// 	// stringys = locationItem.name;
+			// 	// var result = (locationItem.name.search(searchy) >= 0);
+			// 	// locationItem.visible =result;
+			// 	// return result;
+            //     // alert(Object.getOwnPropertyNames(locationItem))
+            //     alert(locationItem.name);
+			// });
+            i=0;
+            $ab.text(searchy);
+            for (i; i < markys().length; i++) {
+                var base_str = markys()[i].info.name;
 
-    // function search(value) {
-    // // remove all the current beers, which removes them from the view
-    // placeList.removeAll();
-    // var x=0
-    // for (x; x < markys().length; x++) {
-    //     // alert("this is x: "+x);
-    //     if(markys()[x].info.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-    //         placeList().push(new placeMark(markys()[x].info));
-    //         $ab.text(markys()[x].info.name)
-    //         // alert(markys()[x].info.name);
-    //         }
-    //     }
-    // }
-    //
-    // placeInput.onkeyup = function(){
-    //     search(placeInput.value);
-    // }
-    // if (placeInput==null || placeInput==""){
-    //     placeList.removeAll();
-    //     for (i; i < markys().length; i++) {
-    //         placeList().push(new placeMark(markys()[x].info));
-    //     }
-    // }
+                if(base_str.toLowerCase().indexOf(searchy) >= 0){
+                    alert(base_str);
+                    placeList()[i].visible = true;
+                }
+                else{
+                    alert("not:::::::" + base_str);
+                    placeList()[i].visible = false;
+                }
 
-    // placeInput.onkeyup = function(){
-    //     // document.getElementById('printchatbox').innerHTML = placeInput.value;
-    //     placeStr(placeInput.value);
-    //
-    //     //
-    //     // for (i; i < places.length; i++) {
-    //     //     $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
-    //     //
-    //     // }
-    //     if (placeStr()){
-    //
-    //         // for (i; i < places.length; i++) {
-    //             var placeTemp = markys()[i].info.name;
-    //             var n = placeTemp.search(placeStr());
-    //             // $ab.text(n);
-    //             if (n >= 0){
-    //                 // $ab.text("abcd "+placeStr());
-    //                 $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
-    //             }
-    //         // $("#list").append("<li id="+i+">"+markys()[0].info.name+"</li><br>");
-    //         // }
-    //     }
-    //     else {
-    //             // $ab.text("abcd ");
-    //             for (i; i < places.length; i++) {
-    //                 $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
-    //
-    //             }
-    //     }
-    // }
-
-
-
-
-
-
-    // for (i; i < places.length; i++) {
-    //     $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
-    //
-    // }
-
-    // this.itemClicked = function(data) {
-    //     alert("abcd");
-    //     alert(data.name);
-    // }
+            }
+            return placeList();
+        }
+    }, self);
 
     this.itemClicked = function(data) {
         // alert(event.target.id);
@@ -245,5 +243,6 @@ function ViewModel() {
 };
 
 function startApp() {
+    // ViewModel.query.subscribe(ViewModel.search);
 	ko.applyBindings(new ViewModel());
 }
