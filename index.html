@@ -1,46 +1,46 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Neighborhood Map</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body class="container">
-      <!-- <ul data-bind="foreach: placeList">
-              <h4><li data-bind="text: name" > </li></h4>
-              <br>
-      </ul> -->
-      <h2 id="abcd"></h2>
-      <div class="left-side left-inside">
-          <h4 id='printinput'></h4>
-          <br>
-          Search
-          <div class="">
-              <form id="form-container">
-                  <input placeholder="Search…" id="place" type="search" data-bind="textInput: query, valueUpdate: 'keyup'" autocomplete="off">
-              </form>
-              <br>
-          </div>
-          <div>
-              <ul data-bind="foreach: finalList">
-                      <h4><li data-bind="attr: { id: idNum}, text: name, click: $parent.itemClicked.bind()" > </li></h4>
-                      <br>
-              </ul>
-          </div>
-          <hr>
-          <div>
-              <h2 id="greeting"></h2>
-          </div>
-      </div>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Neighborhood Map</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body class="container">
+        <!-- <ul data-bind="foreach: placeList">
+                <h4><li data-bind="text: name" > </li></h4>
+                <br>
+        </ul> -->
+        <h2 id="abcd"></h2>
+        <div class="left-side left-inside">
+            <h4 id='printinput'></h4>
+            <br>
+            <div class="">
+                <form id="form-container">
+                    <input class="searchwidth" placeholder="Search…" id="place" type="search" data-bind="textInput: query, valueUpdate: 'keyup'" autocomplete="off">
+                </form>
+                <br>
+            </div>
+            <div>
+                <ul data-bind="foreach: finalList">
+                    <h4><li data-bind="attr: { id: idNum}, text: name, click: $parent.itemClicked.bind()" > </li></h4>
+                    <br>
+                </ul>
+            </div>
+            <hr>
+            <div>
+                <p>selected</p>
+                <h2 id="greeting"></h2>
+            </div>
+        </div>
 
-      <div class="right-side" id="map">
-      </div>
-      <script src="js/libs/jquery.min.js"></script>
-      <script src="js/libs/knockout-3.2.0.js"></script>
-      <script type="text/javascript" src="js/script.js?version=1.1"></script>
-      <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&callback=start" >
-    </script>
-  </body>
+        <div class="right-side" id="map">
+        </div>
+        <script src="js/libs/jquery.min.js"></script>
+        <script src="js/libs/knockout-3.2.0.js"></script>
+        <script type="text/javascript" src="js/script.js?version=1.1"></script>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVPz6x8WGP1jhFxAqoeU-tE43ZPZl6n4o&callback=start" >
+        </script>
+    </body>
 </html>
