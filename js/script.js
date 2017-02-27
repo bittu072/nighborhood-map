@@ -145,18 +145,17 @@ function ViewModel() {
         addMarker(placee, i);
     }
 
-    i = 0;
-
-
     // markys().forEach(function(marky) {
     //     placeList.push(new placeMark(marky));
     // });
 
-    i=0;
+    i = 0;
+    // initial list of places
     for (i; i < markys().length; i++) {
         placeList.push(new placeMark(markys()[i], i));
     }
 
+    // list of places.. should update based on search
     this.finalList = ko.computed( function() {
         var searchy = self.query().toLowerCase();
         placeList.removeAll();
@@ -188,6 +187,15 @@ function ViewModel() {
         listeny(markys()[clickedItemID]);
             // self.currentDog(data);
     }
+
+    // reference: http://stackoverflow.com/questions/21318897/how-to-disable-enter-key-in-html-form
+    // when enter key is press, submit should not be called
+    $('input').on('keydown', function(event) {
+        var x = event.which;
+        if (x === 13) {
+            event.preventDefault();
+        }
+    });
 
 };
 
