@@ -161,64 +161,32 @@ function ViewModel() {
 
     this.finalList = ko.computed( function() {
         var searchy = self.query().toLowerCase();
+        placeList.removeAll();
         if (!searchy) {
             // self.placeList().forEach(function(item){
             //     // item.visible(true);
             // });
             i=0;
             for (i; i < markys().length; i++) {
-                placeList()[i].visible = true;
+                // placeList()[i].visible = false;
+                placeList.push(new placeMark(markys()[i], i));
                 // alert(placeList()[i].name);
             }
             return placeList();
         } else {
-            // return ko.utils.arrayFilter(placeList(), function() {
-                // alert(item.name);
-                // var base_str = item.name.toLowerCase();
-                // var output = (base_str.search(searchy) >= 0);
-                // item.visible(output);
-                // return output;
-                // i=0;
-                // for (i; i < placeList().length; i++) {
-                //     // placeList()[i].visible = true;
-                //     var base_str = placeList()[i].name.toString();
-                //     // alert("abc:::::: " +placeList()[i].idNum);
-                //     // alert(base_str);
-                //     // if(base_str.toLowerCase().indexOf(searchy) >= 0) {
-                //     //
-                //     //     placeList()[i].visible = true;
-                //     // }
-                //     // else {
-                //     //     placeList()[i].visible = false;
-                //     // }
-                //     var result = (base_str.search(searchy) >= 0);
-                //     // alert(result);
-				//     // placeList()[i].visible = result;
-				//     // return result;
-                //
-                // }
-            // });
-            // return placeList();
-            // return ko.utils.arrayFilter(placeList(), function(locationItem) {
-			// 	// stringys = locationItem.name;
-			// 	// var result = (locationItem.name.search(searchy) >= 0);
-			// 	// locationItem.visible =result;
-			// 	// return result;
-            //     // alert(Object.getOwnPropertyNames(locationItem))
-            //     alert(locationItem.name);
-			// });
             i=0;
             $ab.text(searchy);
             for (i; i < markys().length; i++) {
                 var base_str = markys()[i].info.name;
 
                 if(base_str.toLowerCase().indexOf(searchy) >= 0){
-                    alert(base_str);
-                    placeList()[i].visible = true;
+                    // alert(base_str);
+                    // placeList()[i].visible = true;
+                    placeList.push(new placeMark(markys()[i], i));
                 }
                 else{
-                    alert("not:::::::" + base_str);
-                    placeList()[i].visible = false;
+                    // alert("not:::::::" + i);
+                    // placeList()[i].visible = false;
                 }
 
             }
