@@ -92,7 +92,7 @@ function ViewModel() {
     var $ab = $('#printinput');
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
-        center: new google.maps.LatLng(37.865101, -119.538329),
+        center: new google.maps.LatLng(37.76962919, -119.49417114),
     //   this style is to change look/colors of map
         });
 

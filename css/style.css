@@ -20,7 +20,7 @@ ul {
 }
 
 .right-side {
-    margin-left: 1%;
+    margin-left: 2%;
     float: right;
     width: 67%;
 }
@@ -43,58 +43,52 @@ ul {
     padding: 3px 10px;
 }
 
+/* taken from google map for developer */
+
+/* Always set the map height explicitly to define the size of the div
+  * element that contains the map. */
 #map {
-       height: 100%;
-     }
+   height: 95%;
+   /*width: 66.5%;*/
+}
 
+ /* Optional: Makes the sample page fill the window. */
 html, body {
-       height: 100%;
-       margin: 0;
-       padding: 0;
-     }
+   height: 100%;
+   margin: 0;
+   padding: 0;
+}
 
+#description {
+   font-family: Roboto;
+   font-size: 15px;
+   font-weight: 300;
+ }
 
-     /* Always set the map height explicitly to define the size of the div
-      * element that contains the map. */
-     #map {
-       height: 100%;
-     }
-     /* Optional: Makes the sample page fill the window. */
-     html, body {
-       height: 100%;
-       margin: 0;
-       padding: 0;
-     }
-     #description {
-       font-family: Roboto;
-       font-size: 15px;
-       font-weight: 300;
-     }
+#infowindow-content .title {
+   font-weight: bold;
+}
 
-     #infowindow-content .title {
-       font-weight: bold;
-     }
+#infowindow-content {
+   display: none;
+}
 
-     #infowindow-content {
-       display: none;
-     }
+#map #infowindow-content {
+   display: inline;
+}
 
-     #map #infowindow-content {
-       display: inline;
-     }
+#title {
+   color: #fff;
+   background-color: #4d90fe;
+   font-size: 25px;
+   font-weight: 500;
+   padding: 6px 12px;
+}
 
-     #title {
-       color: #fff;
-       background-color: #4d90fe;
-       font-size: 25px;
-       font-weight: 500;
-       padding: 6px 12px;
-     }
-     #target {
+#target {
        width: 345px;
-     }
- }
+}
 
- .searchwidth {
+.searchwidth {
       width:100%;
- }
+}
