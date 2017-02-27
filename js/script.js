@@ -1,7 +1,10 @@
-var place = function(data) {
-    this.name = ko.observable(data.name);
-    this.address = ko.observable(data.address);
-    this.link = ko.observable(data.link);
+var placeMark = function(data, num) {
+    this.idNum = ko.observable(num)
+    this.position = ko.observable(data.position);
+    this.animation = ko.observable(data.animation);
+    this.map = ko.observable(data.map);
+    this.name = ko.observable(data.info.name);
+    // this.info = ko.observableArray(data.info);
 }
 
 // model/datas for the places on map
@@ -73,17 +76,18 @@ function toggleBounce(marker) {
 
 
 function ViewModel() {
-    var placeStr = $('#place').val();
+    var placeInput = document.getElementById('place');
+    // var place = document.getElementById("place").value;
+    // var placeStr = ko.observable();
+    // alert(placeStr);
     // var $greeting = $('#greeting');
+    // var place = ko.observable("");
     var self = this;
-    this.placeList = ko.observableArray([]);
-    this.currentPlace = ko.observable( this.placeList()[0] );
-
-    // places.forEach(function(placeItem){
-    //     self.placeList.push(new place(placeItem));
-    // });
+    placeList = ko.observableArray([]);
+    // this.currentPlace = ko.observable( this.placeList()[0] );
 
     var $greeting = $('#greeting');
+    var $ab = $('#printinput');
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
         center: new google.maps.LatLng(37.865101, -119.538329),
@@ -91,8 +95,6 @@ function ViewModel() {
         });
 
     var markys = ko.observableArray([]);
-    var selectedPlace = ko.observable();
-    var c = ko.observable();
 
     // function to perform task when click on the marker or list name
     function listen(place_info) {
@@ -126,8 +128,10 @@ function ViewModel() {
             map: map,
             info: place,
         });
-        $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
-
+        // $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
+        // var str_list="<li id="+i+">"+markys()[i].info.name+"</li><br>";
+        // placeList()[i] = str_list;
+        // $("#list").append(this.placeList());
 
         listen(markys()[i]);
     }
@@ -139,10 +143,107 @@ function ViewModel() {
         addMarker(placee, i);
     }
 
-    $("li").click(function() {
-       var clickedItemID = event.target.id;
-       listeny(markys()[clickedItemID]);
-      //your snipped to affect page 2 goes here ....
-    });
+    i = 0;
+    var query = ko.observable();
+
+    // markys().forEach(function(marky) {
+    //     placeList.push(new placeMark(marky));
+    // });
+
+    i=0;
+    for (i; i < markys().length; i++) {
+        // alert(placeList()[i].name);
+        placeList.push(new placeMark(markys()[i], i));
+        // alert(markys()[i].info.name);
+    }
+
+
+    // function search(value) {
+    // // remove all the current beers, which removes them from the view
+    // placeList.removeAll();
+    // var x=0
+    // for (x; x < markys().length; x++) {
+    //     // alert("this is x: "+x);
+    //     if(markys()[x].info.name.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+    //         placeList().push(new placeMark(markys()[x].info));
+    //         $ab.text(markys()[x].info.name)
+    //         // alert(markys()[x].info.name);
+    //         }
+    //     }
+    // }
+    //
+    // placeInput.onkeyup = function(){
+    //     search(placeInput.value);
+    // }
+    // if (placeInput==null || placeInput==""){
+    //     placeList.removeAll();
+    //     for (i; i < markys().length; i++) {
+    //         placeList().push(new placeMark(markys()[x].info));
+    //     }
+    // }
+
+    // placeInput.onkeyup = function(){
+    //     // document.getElementById('printchatbox').innerHTML = placeInput.value;
+    //     placeStr(placeInput.value);
+    //
+    //     //
+    //     // for (i; i < places.length; i++) {
+    //     //     $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
+    //     //
+    //     // }
+    //     if (placeStr()){
+    //
+    //         // for (i; i < places.length; i++) {
+    //             var placeTemp = markys()[i].info.name;
+    //             var n = placeTemp.search(placeStr());
+    //             // $ab.text(n);
+    //             if (n >= 0){
+    //                 // $ab.text("abcd "+placeStr());
+    //                 $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
+    //             }
+    //         // $("#list").append("<li id="+i+">"+markys()[0].info.name+"</li><br>");
+    //         // }
+    //     }
+    //     else {
+    //             // $ab.text("abcd ");
+    //             for (i; i < places.length; i++) {
+    //                 $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
+    //
+    //             }
+    //     }
+    // }
+
+
+
+
+
+
+    // for (i; i < places.length; i++) {
+    //     $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
+    //
+    // }
+
+    // this.itemClicked = function(data) {
+    //     alert("abcd");
+    //     alert(data.name);
+    // }
+
+    this.itemClicked = function(data) {
+        // alert(event.target.id);
+        var clickedItemID = event.target.id;
+        listeny(markys()[clickedItemID]);
+            // self.currentDog(data);
+    }
+
+    // $("li").click(function() {
+    //     alert(event.target.id);
+    //    var clickedItemID = event.target.id;
+    //    listeny(markys()[clickedItemID]);
+    // });
+
 
 };
+
+function startApp() {
+	ko.applyBindings(new ViewModel());
+}
