@@ -104,7 +104,7 @@ function ViewModel() {
             $greeting.text(place_info.info.name);
             infowindow.open(map, place_info);
             setTimeout(function () { infowindow.close(); }, 5000);
-
+            wikiapi(place_info.info.name);
         });
     }
 
@@ -180,7 +180,6 @@ function ViewModel() {
     function wikiapi(placewiki){
         $wikiElem.empty();
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + placewiki +'&format=json&callback=wikiCallback';
-        alert(wikiUrl);
         var wikiRequestTimeout = setTimeout(function(){
             $wikiElem.text("failed to get wikipedia resources!");
         }, 8000);
