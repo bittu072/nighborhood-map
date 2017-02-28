@@ -5,12 +5,14 @@ ul {
 }
 
 .container {
-    margin: 0% 2%;
+    margin: 0% 0.6%;
+    width: 98%;
 }
 
 .left-side {
     background-color: #212428;
-    color: #949090;
+    /*color: #949090;*/
+    color: #afaeae;
     float: left;
     width: 31%;
 }
@@ -78,7 +80,7 @@ html, body {
 }
 
 #title {
-   color: #fff;
+   color: #ffffff;
    background-color: #4d90fe;
    font-size: 25px;
    font-weight: 500;
@@ -91,4 +93,15 @@ html, body {
 
 .searchwidth {
       width:100%;
+}
+
+.margin-list {
+    margin: 5px 0px;
+}
+
+.list {
+    color: #7c7a7a;
+}
+.list:hover {
+    color: #3b475b;
 }

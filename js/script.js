@@ -77,9 +77,12 @@ function toggleBounce(marker) {
 
 function ViewModel() {
     var self = this;
+    // var $wikiElem = $('#info');
+    var $wikiElem = $('#wikipedia-links');
     var placeInput = document.getElementById('place');
     placeList = ko.observableArray([]);
     this.query = ko.observable("");
+    placewiki = ko.observable("");
 
     var $greeting = $('#greeting');
     var $ab = $('#printinput');
@@ -169,7 +172,35 @@ function ViewModel() {
         // alert(event.target.id);
         var clickedItemID = event.target.id;
         listeny(markys()[clickedItemID]);
+        placewiki(markys()[clickedItemID].info.name);
+        wikiapi(placewiki());
             // self.currentDog(data);
+    }
+
+    function wikiapi(placewiki){
+        $wikiElem.empty();
+        var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + placewiki +'&format=json&callback=wikiCallback';
+        alert(wikiUrl);
+        var wikiRequestTimeout = setTimeout(function(){
+            $wikiElem.text("failed to get wikipedia resources!");
+        }, 8000);
+
+        $.ajax({
+            url:wikiUrl,
+            dataType: "jsonp",
+            // jsonp: "callback",
+            success: function(response) {
+                var articlesList = response[1];
+
+                for (var i = 0; i <articlesList.length; i++){
+                    articleStr = articlesList[i];
+                    var url = 'http://en.wikipedia.org/wiki/'+articleStr;
+                    $wikiElem.append('<li><a href="'+ url +'">' + articleStr + '</a></li>');
+                };
+
+                clearTimeout(wikiRequestTimeout);
+            }
+        });
     }
 
     // reference: http://stackoverflow.com/questions/21318897/how-to-disable-enter-key-in-html-form
@@ -184,6 +215,5 @@ function ViewModel() {
 };
 
 function start() {
-    // ViewModel.query.subscribe(ViewModel.search);
 	ko.applyBindings(new ViewModel());
 }

@@ -19,14 +19,14 @@
             </div>
             <div>
                 <ul data-bind="foreach: finalList">
-                    <h4><li data-bind="attr: { id: idNum}, text: name, click: $parent.itemClicked.bind()" > </li></h4>
-                    <br>
+                    <h3><li data-bind="attr: { id: idNum}, text: name, click: $parent.itemClicked.bind()" class="list"> </li></h3>
                 </ul>
             </div>
             <hr>
-            <div>
-                <p>clicked place</p>
+            <div id="info">
                 <h2 id="greeting"></h2>
+                wikipedia-links
+                <ul id="wikipedia-links"></ul>
             </div>
         </div>
 
