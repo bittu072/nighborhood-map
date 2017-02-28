@@ -76,17 +76,10 @@ function toggleBounce(marker) {
 
 
 function ViewModel() {
-    var placeInput = document.getElementById('place');
-    // var place = document.getElementById("place").value;
-    // var placeStr = ko.observable();
-    // alert(placeStr);
-    // var $greeting = $('#greeting');
-    // var place = ko.observable("");
     var self = this;
+    var placeInput = document.getElementById('place');
     placeList = ko.observableArray([]);
     this.query = ko.observable("");
-    // query: ko.observable('');
-    // this.currentPlace = ko.observable( this.placeList()[0] );
 
     var $greeting = $('#greeting');
     var $ab = $('#printinput');
@@ -130,11 +123,6 @@ function ViewModel() {
             map: map,
             info: place,
         });
-        // $("#list").append("<li id="+i+">"+markys()[i].info.name+"</li><br>");
-        // var str_list="<li id="+i+">"+markys()[i].info.name+"</li><br>";
-        // placeList()[i] = str_list;
-        // $("#list").append(this.placeList());
-
         listen(markys()[i]);
     }
 
@@ -144,10 +132,6 @@ function ViewModel() {
         var placee = places[i];
         addMarker(placee, i);
     }
-
-    // markys().forEach(function(marky) {
-    //     placeList.push(new placeMark(marky));
-    // });
 
     i = 0;
     // initial list of places
@@ -160,7 +144,7 @@ function ViewModel() {
         var searchy = self.query().toLowerCase();
         placeList.removeAll();
         if (!searchy) {
-            i=0;
+            i = 0;
             for (i; i < markys().length; i++) {
                 // placeList()[i].visible = false;
                 placeList.push(new placeMark(markys()[i], i));
@@ -168,7 +152,7 @@ function ViewModel() {
             }
             return placeList();
         } else {
-            i=0;
+            i = 0;
             $ab.text(searchy);
             for (i; i < markys().length; i++) {
                 var base_str = markys()[i].info.name;
