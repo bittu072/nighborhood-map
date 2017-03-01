@@ -76,16 +76,17 @@ function toggleBounce(marker) {
 
 
 function ViewModel() {
+    
     var self = this;
-    // var $wikiElem = $('#info');
+    var $greeting = $('#greeting');
+    var $ab = $('#printinput');
     var $wikiElem = $('#wikipedia-links');
     var placeInput = document.getElementById('place');
     placeList = ko.observableArray([]);
     this.query = ko.observable("");
     placewiki = ko.observable("");
 
-    var $greeting = $('#greeting');
-    var $ab = $('#printinput');
+
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
         center: new google.maps.LatLng(37.76962919, -119.49417114),
@@ -177,6 +178,7 @@ function ViewModel() {
             // self.currentDog(data);
     }
 
+    // 3rd party API implmentation. Wikipedia API
     function wikiapi(placewiki){
         $wikiElem.empty();
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + placewiki +'&format=json&callback=wikiCallback';
@@ -192,7 +194,7 @@ function ViewModel() {
                 var articlesList = response[1];
                 var articleNum;
 
-                // limiting wikipedia links 
+                // limiting wikipedia links
                 if (articlesList.length > 2){
                     articleNum = 2;
                 } else {
@@ -202,7 +204,7 @@ function ViewModel() {
                 for (var i = 0; i < articleNum; i++){
                     articleStr = articlesList[i];
                     var url = 'http://en.wikipedia.org/wiki/'+articleStr;
-                    $wikiElem.append('<li><a href="'+ url +'">' + articleStr + '</a></li>');
+                    $wikiElem.append('<li><a href="'+ url +'" style="text-decoration:none">' + articleStr + '</a></li>');
                 };
 
                 clearTimeout(wikiRequestTimeout);
@@ -221,6 +223,7 @@ function ViewModel() {
 
 };
 
+// this is to call when application starts
 function start() {
 	ko.applyBindings(new ViewModel());
 }
