@@ -190,8 +190,16 @@ function ViewModel() {
             // jsonp: "callback",
             success: function(response) {
                 var articlesList = response[1];
+                var articleNum;
 
-                for (var i = 0; i <articlesList.length; i++){
+                // limiting wikipedia links 
+                if (articlesList.length > 2){
+                    articleNum = 2;
+                } else {
+                    articleNum = articlesList.length;
+                }
+
+                for (var i = 0; i < articleNum; i++){
                     articleStr = articlesList[i];
                     var url = 'http://en.wikipedia.org/wiki/'+articleStr;
                     $wikiElem.append('<li><a href="'+ url +'">' + articleStr + '</a></li>');
