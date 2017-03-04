@@ -45,7 +45,7 @@ ul {
     padding: 3px 10px;
 }
 
-/* taken from google map for developer */
+/*** taken from google map for developer ***/
 
 /* Always set the map height explicitly to define the size of the div
   * element that contains the map. */
@@ -91,6 +91,8 @@ html, body {
        width: 345px;
 }
 
+/*** ***/
+
 .searchwidth {
       width:100%;
 }
@@ -104,4 +106,14 @@ html, body {
 }
 .list:hover {
     color: #3b475b;
+}
+
+
+
+@media screen and (max-width: 700px) {
+
+    .left-side, .right-side {
+            float: none;
+            width: auto;
+        }
 }
