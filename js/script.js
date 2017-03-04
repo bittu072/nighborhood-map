@@ -79,7 +79,6 @@ function ViewModel() {
 
     var self = this;
     var $greeting = $('#greeting');
-    var $ab = $('#printinput');
     var $wikiElem = $('#wikipedia-links');
     var placeInput = document.getElementById('place');
     placeList = ko.observableArray([]);
@@ -237,7 +236,6 @@ function ViewModel() {
             return placeList();
         } else {
             i = 0;
-            $ab.text(searchy);
             for (i; i < markys().length; i++) {
                 var base_str = markys()[i].info.name;
 
@@ -262,6 +260,9 @@ function ViewModel() {
     function wikiapi(placewiki){
         $wikiElem.empty();
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + placewiki +'&format=json&callback=wikiCallback';
+
+        // jsonp does not support error method so this is the replacement of error function
+        // if browser does not get wiki resources in 8 seconds it will show provided msg
         var wikiRequestTimeout = setTimeout(function(){
             $wikiElem.text("failed to get wikipedia resources!");
         }, 8000);
@@ -277,7 +278,13 @@ function ViewModel() {
                 // limiting wikipedia links
                 if (articlesList.length > 2){
                     articleNum = 2;
-                } else {
+                }
+                // if no article for given string then do following 
+                else if (articlesList.length == 0) {
+                    $wikiElem.append('<li>No related article on wikipedia </li>');
+                }
+
+                else {
                     articleNum = articlesList.length;
                 }
 
@@ -306,4 +313,12 @@ function ViewModel() {
 // this is to call when application starts
 function start() {
 	ko.applyBindings(new ViewModel());
+}
+
+// Error handling for google map
+// Reference:: https://www.w3schools.com/jsref/event_onerror.asp
+// also check ajax project what we did for wikipedia error
+function errorMap() {
+    var $mappy = $('#map');
+    $mappy.append("<h1 class=\"text-center\">Error on loading Map</h1>")
 }
