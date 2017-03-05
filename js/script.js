@@ -248,12 +248,10 @@ function ViewModel() {
     }, self);
 
     this.itemClicked = function(data) {
-        // alert(event.target.id);
         var clickedItemID = event.target.id;
         listeny(markys()[clickedItemID]);
         placewiki(markys()[clickedItemID].info.name);
         wikiapi(placewiki());
-            // self.currentDog(data);
     }
 
     // 3rd party API implmentation. Wikipedia API
@@ -279,7 +277,7 @@ function ViewModel() {
                 if (articlesList.length > 2){
                     articleNum = 2;
                 }
-                // if no article for given string then do following 
+                // if no article for given string then do following
                 else if (articlesList.length == 0) {
                     $wikiElem.append('<li>No related article on wikipedia </li>');
                 }
