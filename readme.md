@@ -5,7 +5,9 @@ This project is Javascript based web application. This web app is a application 
 
 
 ### Features
-* Written in JavaScript, HTML, CSS  
+* Written in JavaScript, HTML, CSS   
+
+
 ### What's included
 ```
 nighborhood-map/
