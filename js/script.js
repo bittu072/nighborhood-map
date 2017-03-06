@@ -90,7 +90,7 @@ function ViewModel() {
         zoom: 11,
         center: new google.maps.LatLng(37.76962919, -119.49417114),
     //   this style is to change look/colors of map
-    styles: [
+        styles: [
         {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
         {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
         {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
@@ -176,8 +176,9 @@ function ViewModel() {
 
     // function to perform task when click on the marker or list name
     function listen(place_info) {
+        var infoma = place_info.info.name + "<br>" + place_info.info.link
         var infowindow = new google.maps.InfoWindow({
-              content: place_info.info.name
+              content: infoma
             });
         google.maps.event.addListener(place_info, 'click', function() {
             toggleBounce(place_info);
@@ -190,7 +191,7 @@ function ViewModel() {
 
     function listeny(place_info) {
         var infowindow = new google.maps.InfoWindow({
-              content: place_info.info.name
+              content: place_info.info.name + "<br>" + place_info.info.link
             });
             toggleBounce(place_info);
             $greeting.text(place_info.info.name);
@@ -279,7 +280,7 @@ function ViewModel() {
                 }
                 // if no article for given string then do following
                 else if (articlesList.length == 0) {
-                    $wikiElem.append('<li>No related article on wikipedia </li>');
+                    $wikiElem.append('<li>No related article on wikipedia !!!</li>');
                 }
 
                 else {
