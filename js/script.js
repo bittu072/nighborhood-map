@@ -176,9 +176,8 @@ function ViewModel() {
 
     // function to perform task when click on the marker or list name
     function listen(place_info) {
-        var infoma = place_info.info.name + "<br>" + place_info.info.link
         var infowindow = new google.maps.InfoWindow({
-              content: infoma
+              content: place_info.info.name + "<br>" + place_info.info.link
             });
         google.maps.event.addListener(place_info, 'click', function() {
             toggleBounce(place_info);
