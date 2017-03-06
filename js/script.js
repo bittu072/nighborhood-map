@@ -1,5 +1,5 @@
 var placeMark = function(data, num) {
-    this.idNum = ko.observable(num)
+    this.idNum = ko.observable(num);
     this.position = ko.observable(data.position);
     this.animation = ko.observable(data.animation);
     this.map = ko.observable(data.map);
