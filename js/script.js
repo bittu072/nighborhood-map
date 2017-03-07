@@ -222,6 +222,12 @@ function ViewModel() {
         placeList.push(new placeMark(markys()[i], i));
     }
 
+    // to control the display of the marker
+    // value "map" can be used to show, and valu "null" can be used to hide the marker
+    function setMap(map, n) {
+          markys()[n].setMap(map);
+     }
+
     // list of places.. should update based on search
     this.finalList = ko.computed( function() {
         var searchy = self.query().toLowerCase();
@@ -231,6 +237,7 @@ function ViewModel() {
             for (i; i < markys().length; i++) {
                 // placeList()[i].visible = false;
                 placeList.push(new placeMark(markys()[i], i));
+                setMap(map, i);
                 // alert(placeList()[i].name);
             }
             return placeList();
@@ -241,6 +248,10 @@ function ViewModel() {
 
                 if(base_str.toLowerCase().indexOf(searchy) >= 0){
                     placeList.push(new placeMark(markys()[i], i));
+                    setMap(map, i);
+                }
+                else {
+                    setMap(null, i)
                 }
             }
             return placeList();
