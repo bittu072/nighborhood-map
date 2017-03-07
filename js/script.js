@@ -173,29 +173,37 @@ function ViewModel() {
         });
 
     var markys = ko.observableArray([]);
+    var openInfoWindow;
 
     // function to perform task when click on the marker or list name
     function listen(place_info) {
+
         var infowindow = new google.maps.InfoWindow({
               content: place_info.info.name + "<br>" + place_info.info.link
             });
+        openInfoWindow&&openInfoWindow.close();
         google.maps.event.addListener(place_info, 'click', function() {
+
             toggleBounce(place_info);
             $greeting.text(place_info.info.name);
             infowindow.open(map, place_info);
-            setTimeout(function () { infowindow.close(); }, 5000);
+            openInfoWindow = infowindow;
+            // setTimeout(function () { infowindow.close(); }, 5000);
             wikiapi(place_info.info.name);
         });
     }
 
     function listeny(place_info) {
+
         var infowindow = new google.maps.InfoWindow({
               content: place_info.info.name + "<br>" + place_info.info.link
             });
-            toggleBounce(place_info);
-            $greeting.text(place_info.info.name);
-            infowindow.open(map, place_info);
-            setTimeout(function () { infowindow.close(); }, 5000);
+        openInfoWindow&&openInfoWindow.close();
+        toggleBounce(place_info);
+        $greeting.text(place_info.info.name);
+        infowindow.open(map, place_info);
+        openInfoWindow = infowindow;
+            // setTimeout(function () { infowindow.close(); }, 5000);
     }
 
     // function to add marker
@@ -221,6 +229,12 @@ function ViewModel() {
     for (i; i < markys().length; i++) {
         placeList.push(new placeMark(markys()[i], i));
     }
+
+    // function closeAllInfoWindows() {
+    //     for (var i=0;i<markys().length;i++) {
+    //         infowindow.close();
+    //     }
+    // }
 
     // to control the display of the marker
     // value "map" can be used to show, and valu "null" can be used to hide the marker
