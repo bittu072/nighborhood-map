@@ -181,6 +181,7 @@ function ViewModel() {
         var infowindow = new google.maps.InfoWindow({
               content: place_info.info.name + "<br>" + place_info.info.link
             });
+        // reference for closing open infowindow: http://stackoverflow.com/questions/19067027/close-all-info-windows-google-maps-api-v3
         openInfoWindow&&openInfoWindow.close();
         google.maps.event.addListener(place_info, 'click', function() {
 
@@ -229,12 +230,6 @@ function ViewModel() {
     for (i; i < markys().length; i++) {
         placeList.push(new placeMark(markys()[i], i));
     }
-
-    // function closeAllInfoWindows() {
-    //     for (var i=0;i<markys().length;i++) {
-    //         infowindow.close();
-    //     }
-    // }
 
     // to control the display of the marker
     // value "map" can be used to show, and valu "null" can be used to hide the marker
