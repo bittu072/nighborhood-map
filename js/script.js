@@ -182,9 +182,9 @@ function ViewModel() {
               content: place_info.info.name + "<br>" + place_info.info.link
             });
         // reference for closing open infowindow: http://stackoverflow.com/questions/19067027/close-all-info-windows-google-maps-api-v3
-        openInfoWindow&&openInfoWindow.close();
-        google.maps.event.addListener(place_info, 'click', function() {
 
+        google.maps.event.addListener(place_info, 'click', function() {
+            openInfoWindow&&openInfoWindow.close();
             toggleBounce(place_info);
             $greeting.text(place_info.info.name);
             infowindow.open(map, place_info);
@@ -245,6 +245,7 @@ function ViewModel() {
             i = 0;
             for (i; i < markys().length; i++) {
                 // placeList()[i].visible = false;
+                openInfoWindow&&openInfoWindow.close();
                 placeList.push(new placeMark(markys()[i], i));
                 setMap(map, i);
                 // alert(placeList()[i].name);
