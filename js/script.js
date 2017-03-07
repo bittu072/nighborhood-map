@@ -1,10 +1,9 @@
 var placeMark = function(data, num) {
-    this.idNum = ko.observable(num);
-    this.position = ko.observable(data.position);
-    this.animation = ko.observable(data.animation);
-    this.map = ko.observable(data.map);
-    this.name = ko.observable(data.info.name);
-    // this.info = ko.observableArray(data.info);
+    this.idNum = num;
+    this.position = data.position;
+    this.animation = data.animation;
+    this.map = data.map;
+    this.name = data.info.name;
 }
 
 // model/datas for the places on map
@@ -78,7 +77,6 @@ function toggleBounce(marker) {
 function ViewModel() {
 
     var self = this;
-    var $greeting = $('#greeting');
     var $wikiElem = $('#wikipedia-links');
     var placeInput = document.getElementById('place');
     placeList = ko.observableArray([]);
@@ -174,6 +172,7 @@ function ViewModel() {
 
     var markys = ko.observableArray([]);
     var openInfoWindow;
+    displayName = ko.observable("");
 
     // function to perform task when click on the marker or list name
     function listen(place_info) {
@@ -185,7 +184,9 @@ function ViewModel() {
         google.maps.event.addListener(place_info, 'click', function() {
             openInfoWindow&&openInfoWindow.close();
             toggleBounce(place_info);
-            $greeting.text(place_info.info.name);
+
+            // $greeting.text(place_info.info.name);
+            displayName(place_info.info.name);
             infowindow.open(map, place_info);
             openInfoWindow = infowindow;
             // setTimeout(function () { infowindow.close(); }, 5000);
@@ -201,7 +202,8 @@ function ViewModel() {
         // reference for closing open infowindow: http://stackoverflow.com/questions/19067027/close-all-info-windows-google-maps-api-v3
         openInfoWindow&&openInfoWindow.close();
         toggleBounce(place_info);
-        $greeting.text(place_info.info.name);
+        // $greeting.text(place_info.info.name);
+        displayName(place_info.info.name);
         infowindow.open(map, place_info);
         openInfoWindow = infowindow;
             // setTimeout(function () { infowindow.close(); }, 5000);
@@ -219,17 +221,16 @@ function ViewModel() {
     }
 
     // looping through all my data to get lat and long of those
-    var i = 0;
-    for (i; i < places.length; i++) {
+    for (var i = 0; i < places.length; i++) {
         var placee = places[i];
         addMarker(placee, i);
     }
 
-    i = 0;
     // initial list of places
-    for (i; i < markys().length; i++) {
+    for (var i = 0; i < markys().length; i++) {
         placeList.push(new placeMark(markys()[i], i));
     }
+
 
     // to control the display of the marker
     // value "map" can be used to show, and valu "null" can be used to hide the marker
@@ -242,8 +243,7 @@ function ViewModel() {
         var searchy = self.query().toLowerCase();
         placeList.removeAll();
         if (!searchy) {
-            i = 0;
-            for (i; i < markys().length; i++) {
+            for (var i = 0; i < markys().length; i++) {
                 // placeList()[i].visible = false;
                 openInfoWindow&&openInfoWindow.close();
                 placeList.push(new placeMark(markys()[i], i));
@@ -252,8 +252,7 @@ function ViewModel() {
             }
             return placeList();
         } else {
-            i = 0;
-            for (i; i < markys().length; i++) {
+            for (var i = 0; i < markys().length; i++) {
                 var base_str = markys()[i].info.name;
 
                 if(base_str.toLowerCase().indexOf(searchy) >= 0){
@@ -279,6 +278,7 @@ function ViewModel() {
     // 3rd party API implmentation. Wikipedia API
     function wikiapi(placewiki){
         $wikiElem.empty();
+        wikipediaLinks = ko.observableArray([]);
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + placewiki +'&format=json&callback=wikiCallback';
 
         // ERROR HANDLING
@@ -287,6 +287,13 @@ function ViewModel() {
         var wikiRequestTimeout = setTimeout(function(){
             $wikiElem.text("failed to get wikipedia resources!");
         }, 8000);
+        // $.ajax({
+        //     // ajax settings
+        // }).done(function (data) {
+        //     // successful
+        // }).fail(function (jqXHR, textStatus) {
+        //     // error handling
+        // });
 
         $.ajax({
             url:wikiUrl,
@@ -302,7 +309,7 @@ function ViewModel() {
                 }
                 // if no article for given string then do following
                 else if (articlesList.length == 0) {
-                    $wikiElem.append('<li>No related article on wikipedia !!!</li>');
+                    $wikiElem.append('No related article on wikipedia !!!');
                 }
 
                 else {
