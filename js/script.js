@@ -6,6 +6,11 @@ var placeMark = function(data, num) {
     this.name = data.info.name;
 }
 
+var wikiMark = function(data) {
+    this.link = data.urlofwiki;
+    this.title = data.title
+}
+
 // model/datas for the places on map
 var places = [
         {
@@ -274,11 +279,11 @@ function ViewModel() {
         placewiki(markys()[clickedItemID].info.name);
         wikiapi(placewiki());
     }
-
+    wikipediaLinks = ko.observableArray([]);
     // 3rd party API implmentation. Wikipedia API
     function wikiapi(placewiki){
-        $wikiElem.empty();
-        wikipediaLinks = ko.observableArray([]);
+        wikipediaLinks.removeAll();
+
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + placewiki +'&format=json&callback=wikiCallback';
 
         // ERROR HANDLING
@@ -309,7 +314,10 @@ function ViewModel() {
                 }
                 // if no article for given string then do following
                 else if (articlesList.length == 0) {
-                    $wikiElem.append('No related article on wikipedia !!!');
+                    var finalStringy = {
+                        title: '!!!! No related article on wikipedia !!!!'
+                    };
+                    wikipediaLinks.push(new wikiMark(finalStringy));
                 }
 
                 else {
@@ -319,7 +327,11 @@ function ViewModel() {
                 for (var i = 0; i < articleNum; i++){
                     articleStr = articlesList[i];
                     var url = 'http://en.wikipedia.org/wiki/'+articleStr;
-                    $wikiElem.append('<li><a href="'+ url +'" style="text-decoration:none">' + articleStr + '</a></li>');
+                    var finalStringy = {
+                        urlofwiki: url,
+                        title: articleStr
+                    };
+                    wikipediaLinks.push(new wikiMark(finalStringy));
                 };
 
                 clearTimeout(wikiRequestTimeout);
