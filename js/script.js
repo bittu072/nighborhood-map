@@ -1,4 +1,4 @@
-var placeMark = function(data, num) {
+var PlaceMark = function(data, num) {
     this.idNum = num;
     this.position = data.position;
     this.animation = data.animation;
@@ -6,7 +6,7 @@ var placeMark = function(data, num) {
     this.name = data.info.name;
 }
 
-var wikiMark = function(data) {
+var WikiMark = function(data) {
     this.link = data.urlofwiki;
     this.title = data.title
 }
@@ -82,12 +82,10 @@ function toggleBounce(marker) {
 function ViewModel() {
 
     var self = this;
-    var $wikiElem = $('#wikipedia-links');
     var placeInput = document.getElementById('place');
     placeList = ko.observableArray([]);
     this.query = ko.observable("");
     placewiki = ko.observable("");
-
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
@@ -190,7 +188,6 @@ function ViewModel() {
             openInfoWindow&&openInfoWindow.close();
             toggleBounce(place_info);
 
-            // $greeting.text(place_info.info.name);
             displayName(place_info.info.name);
             infowindow.open(map, place_info);
             openInfoWindow = infowindow;
@@ -207,7 +204,7 @@ function ViewModel() {
         // reference for closing open infowindow: http://stackoverflow.com/questions/19067027/close-all-info-windows-google-maps-api-v3
         openInfoWindow&&openInfoWindow.close();
         toggleBounce(place_info);
-        // $greeting.text(place_info.info.name);
+
         displayName(place_info.info.name);
         infowindow.open(map, place_info);
         openInfoWindow = infowindow;
@@ -233,7 +230,7 @@ function ViewModel() {
 
     // initial list of places
     for (var i = 0; i < markys().length; i++) {
-        placeList.push(new placeMark(markys()[i], i));
+        placeList.push(new PlaceMark(markys()[i], i));
     }
 
 
@@ -251,7 +248,7 @@ function ViewModel() {
             for (var i = 0; i < markys().length; i++) {
                 // placeList()[i].visible = false;
                 openInfoWindow&&openInfoWindow.close();
-                placeList.push(new placeMark(markys()[i], i));
+                placeList.push(new PlaceMark(markys()[i], i));
                 setMap(map, i);
                 // alert(placeList()[i].name);
             }
@@ -261,7 +258,7 @@ function ViewModel() {
                 var base_str = markys()[i].info.name;
 
                 if(base_str.toLowerCase().indexOf(searchy) >= 0){
-                    placeList.push(new placeMark(markys()[i], i));
+                    placeList.push(new PlaceMark(markys()[i], i));
                     setMap(map, i);
                 }
                 else {
@@ -293,13 +290,6 @@ function ViewModel() {
         var wikiRequestTimeout = setTimeout(function(){
             wikiDisplayError('Failed to get wikipedia resources !!!!');
         }, 8000);
-        // $.ajax({
-        //     // ajax settings
-        // }).done(function (data) {
-        //     // successful
-        // }).fail(function (jqXHR, textStatus) {
-        //     // error handling
-        // });
 
         $.ajax({
             url:wikiUrl,
@@ -318,7 +308,7 @@ function ViewModel() {
                     var finalStringy = {
                         title: '!!!! No related article on wikipedia !!!!'
                     };
-                    wikipediaLinks.push(new wikiMark(finalStringy));
+                    wikipediaLinks.push(new WikiMark(finalStringy));
                 }
 
                 else {
@@ -332,22 +322,13 @@ function ViewModel() {
                         urlofwiki: url,
                         title: articleStr
                     };
-                    wikipediaLinks.push(new wikiMark(finalStringy));
+                    wikipediaLinks.push(new WikiMark(finalStringy));
                 };
 
                 clearTimeout(wikiRequestTimeout);
             }
         });
     }
-
-    // reference: http://stackoverflow.com/questions/21318897/how-to-disable-enter-key-in-html-form
-    // when enter key is press, submit should not be called
-    $('input').on('keydown', function(event) {
-        var x = event.which;
-        if (x === 13) {
-            event.preventDefault();
-        }
-    });
 
 };
 
@@ -362,4 +343,5 @@ function start() {
 function errorMap() {
     var $mappy = $('#map');
     $mappy.append("<h1 class=\"text-center\">Error on loading Map</h1>")
+    // mapError("!!Error on loading Map!!");
 }
