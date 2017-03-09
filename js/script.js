@@ -280,17 +280,18 @@ function ViewModel() {
         wikiapi(placewiki());
     }
     wikipediaLinks = ko.observableArray([]);
+    wikiDisplayError = ko.observable('');
     // 3rd party API implmentation. Wikipedia API
     function wikiapi(placewiki){
         wikipediaLinks.removeAll();
-
+        wikiDisplayError('');
         var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + placewiki +'&format=json&callback=wikiCallback';
 
         // ERROR HANDLING
         // jsonp does not support error method so this is the replacement of error function
         // if browser does not get wiki resources in 8 seconds it will show provided msg
         var wikiRequestTimeout = setTimeout(function(){
-            $wikiElem.text("failed to get wikipedia resources!");
+            wikiDisplayError('Failed to get wikipedia resources !!!!');
         }, 8000);
         // $.ajax({
         //     // ajax settings

@@ -30,8 +30,9 @@
                 <h2 data-bind="text: displayName()"></h2>
                 wikipedia-links
                 <ul id="wikipedia-links" data-bind="foreach: wikipediaLinks">
-                    <li> <a data-bind="attr: { href: link}, text: title"><a> </li>
+                    <li> <a data-bind="attr: { href: link}, text: title"></a> </li>
                 </ul>
+                <h4 data-bind="text: wikiDisplayError()"></h4>
             </div>
         </div>
         <div class="right-side" id="map">
