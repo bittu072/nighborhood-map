@@ -64,7 +64,6 @@ var places = [
         }
 ]
 
-// var map;
 
 function toggleBounce(marker) {
   // Google map documentation shows to keep one "=" instead of two. Does not work with "=="
