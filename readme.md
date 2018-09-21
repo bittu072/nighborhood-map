@@ -1,4 +1,4 @@
-# Nighborhood Map
+# Neighborhood Map
 ***
 ### Introduction
 This project is Javascript based web application. This web app is a application of AJAX request, knockout library and jQuery. It shows list of places added in the data model. (When clicked on the place from the list or clicked on the marker, Name of the clicked place and links of the wikipedia articles related to place are added on the bottom of the list.)
